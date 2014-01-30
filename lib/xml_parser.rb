@@ -14,6 +14,13 @@ class XMLParser
     table
   end
 
+  def self.build_permutations(table)
+    { "AUD" => {"CAD"=>"0", "USD"=>"0"},
+      "CAD" => {"USD"=>"0", "AUD"=>"0"},
+      "USD" => {"CAD"=>"0", "AUD"=>"0"}
+    }
+  end
+
   def self.convert_through(from_a, to_a, from_b, to_b)
     (to_a / from_a.to_f) * (to_b / from_b.to_f)
   end
