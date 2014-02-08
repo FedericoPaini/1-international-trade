@@ -13,22 +13,13 @@ describe XMLParser do
     { "AUD" => {"CAD"=>"1.0079"},
       "CAD" => {"USD"=>"1.0090"},
       "USD" => {"CAD"=>"0.9911"} }
-  }
+    }
 
   it "parses the xml text" do
     expect(XMLParser.parse(xml_text)).to eql(
       { "AUD" => {"CAD"=>"1.0079"},
         "CAD" => {"USD"=>"1.0090"},
         "USD" => {"CAD"=>"0.9911"},
-      }
-    )
-  end
-
-  it "builds all permutations" do
-    expect(XMLParser.build_permutations(big_table)).to eql(
-      { "AUD" => {"CAD"=>"0", "USD"=>"0"},
-        "CAD" => {"USD"=>"0", "AUD"=>"0"},
-        "USD" => {"CAD"=>"0", "AUD"=>"0"},
       }
     )
   end
@@ -43,5 +34,14 @@ describe XMLParser do
 
   it "reverses the rate" do
     expect(XMLParser.convert_opposite_currency(1,2)).to eql(0.5)
+  end
+
+  it "builds all permutations" do
+    expect(XMLParser.build_permutations(big_table)).to eql(
+      { "AUD" => {"CAD"=>"0", "USD"=>"0"},
+        "CAD" => {"USD"=>"0", "AUD"=>"0"},
+        "USD" => {"CAD"=>"0", "AUD"=>"0"},
+      }
+    )
   end
 end
