@@ -1,7 +1,11 @@
 require 'spec_helper'
-require 'xml_parser'
+require 'currency_converter'
 
-describe XMLParser do
+describe CurrencyConverter do
+
+  before(:each) do
+    @cc = CurrencyConverter.new
+  end
 
   let(:xml_text) { IO.read(fixture('SAMPLE_RATES.xml')) }
 
@@ -22,25 +26,25 @@ describe XMLParser do
   end
 
   it "builds an initial table from XML" do
-    expect(XMLParser.build_table(xml_text)).to eql(table)
+    expect(@cc.build_table(xml_text)).to eql(table)
   end
 
   it "builds all permutations" do
-    expect(XMLParser.build_permutations(table)).to eql(permutations)
+    expect(@cc.build_permutations(table)).to eql(permutations)
   end
 
   it "finds common currency shared by USD and AUD" do
-    expect(XMLParser.find_common_currency('USD', 'AUD', permutations)).to eql('CAD')
+    expect(@cc.find_common_currency('USD', 'AUD', permutations)).to eql('CAD')
   end
 
   it "converts through 2 currencies" do
     pending
-    expect(XMLParser.convert_through(1, 2, 1, 2)).to eql(4.0)
+    expect(@cc.convert_through(1, 2, 1, 2)).to eql(4.0)
   end
 
   it "reverses the rate" do
     pending
-    expect(XMLParser.convert_opposite_currency(1,2)).to eql(0.5)
+    expect(@cc.convert_opposite_currency(1,2)).to eql(0.5)
   end
 
 end
